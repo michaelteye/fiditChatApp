@@ -31,13 +31,13 @@ export class MessageService {
         if (!await this.userRepository.findOne({ where: { email: to }})) {
             throw new HttpException('Receiver of the message doesn\'t exist in the system', HttpStatus.BAD_REQUEST);
         }
-        if (! await this.userRepository.findOne({ where: { email: from }})) {
+        if (!await this.userRepository.findOne({ where: { email: from }})) {
             throw new HttpException('Sender of the message doesn\'t exist in the system', HttpStatus.BAD_REQUEST);
         }
     }
 
     /**
-     * If a user is logged in the token will exist in the cache. This method retrieves that cached token.
+     * If a user is logged in, the token will exist in the cache. This method retrieves that cached token.
      * @param email of a user.
      */
     private async getRecipientToken(email: string): Promise<boolean> {
@@ -70,7 +70,7 @@ export class MessageService {
      * @param options Object containing page (current page of conversation) and limit (conversation per page) attributes.
      */
     async getConversation(convoWith, user, options: IPaginationOptions): Promise<MessagesResponseDTO> {
-        const queryBuilder = this.messageRepository.createQueryBuilder('message');
+        const queryBuilder =   this.messageRepository.createQueryBuilder('message');
         // All combination of from and to in of a message and when ordered by created date
         // gives you the entire conversation that belongs to two users.
         if (convoWith !== user) {
